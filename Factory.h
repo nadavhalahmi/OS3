@@ -3,9 +3,14 @@
 
 #include <pthread.h>
 #include <list>
+#include <queue>
 #include "Product.h"
 
 class Factory{
+private:
+    std::queue<Product> *productsQ;
+    bool returningServiceOpen;
+    bool factoryOpen;
 public:
     Factory();
     ~Factory();

@@ -1,15 +1,41 @@
 #include "Factory.h"
 
-Factory::Factory(){
+typedef struct{
+    Factory* factory;
+    Product* products;
+    int num_products;
+} produce_t;
+
+
+
+void* produceWrapper(void* arg){
+    produce_t* arg_t = (produce_t*) arg;
+    arg_t->factory->produce(arg_t->num_products, arg_t->products);
+}
+
+
+Factory::Factory() : returningServiceOpen(true), factoryOpen(true){
+    productsQ = new std::queue<Product>();
 }
 
 Factory::~Factory(){
+    delete(productsQ);
 }
 
 void Factory::startProduction(int num_products, Product* products,unsigned int id){
+    //TODO: check what to do with id (maybe add to collection or something)
+    pthread_t p;
+
+    produce_t* arg = new produce_t; //TODO: delete somewhere and keep arg somewhere to delete
+    arg->factory = this;
+    arg->products = products;
+    arg->num_products = num_products;
+    pthread_create(&p, NULL, produceWrapper, arg);
 }
 
 void Factory::produce(int num_products, Product* products){
+    for(int i=0;i<num_products;i++)
+        productsQ->push(products[i]);
 }
 
 void Factory::finishProduction(unsigned int id){
