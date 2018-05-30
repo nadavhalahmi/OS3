@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/HW3.dir/main.cpp.obj"
+  "CMakeFiles/HW3.dir/Factory.cxx.obj"
   "HW3.pdb"
   "HW3.exe"
   "HW3.exe.manifest"

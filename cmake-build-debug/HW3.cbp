@@ -82,7 +82,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/main.cpp">
+		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/Factory.cxx">
+			<Option target="HW3"/>
+		</Unit>
+		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/Factory.h">
+			<Option target="HW3"/>
+		</Unit>
+		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/Product.h">
 			<Option target="HW3"/>
 		</Unit>
 		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/CMakeLists.txt">

@@ -56,38 +56,38 @@ include CMakeFiles/HW3.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/HW3.dir/flags.make
 
-CMakeFiles/HW3.dir/main.cpp.obj: CMakeFiles/HW3.dir/flags.make
-CMakeFiles/HW3.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HW3.dir/main.cpp.obj"
-	C:\TDM-GCC-64\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\HW3.dir\main.cpp.obj -c "C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\main.cpp"
+CMakeFiles/HW3.dir/Factory.cxx.obj: CMakeFiles/HW3.dir/flags.make
+CMakeFiles/HW3.dir/Factory.cxx.obj: ../Factory.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HW3.dir/Factory.cxx.obj"
+	C:\TDM-GCC-64\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\HW3.dir\Factory.cxx.obj -c "C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\Factory.cxx"
 
-CMakeFiles/HW3.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HW3.dir/main.cpp.i"
-	C:\TDM-GCC-64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\main.cpp" > CMakeFiles\HW3.dir\main.cpp.i
+CMakeFiles/HW3.dir/Factory.cxx.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HW3.dir/Factory.cxx.i"
+	C:\TDM-GCC-64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\Factory.cxx" > CMakeFiles\HW3.dir\Factory.cxx.i
 
-CMakeFiles/HW3.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HW3.dir/main.cpp.s"
-	C:\TDM-GCC-64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\main.cpp" -o CMakeFiles\HW3.dir\main.cpp.s
+CMakeFiles/HW3.dir/Factory.cxx.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HW3.dir/Factory.cxx.s"
+	C:\TDM-GCC-64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\nadav\OneDrive - Technion\Simester D\OS\HW3\Factory.cxx" -o CMakeFiles\HW3.dir\Factory.cxx.s
 
-CMakeFiles/HW3.dir/main.cpp.obj.requires:
+CMakeFiles/HW3.dir/Factory.cxx.obj.requires:
 
-.PHONY : CMakeFiles/HW3.dir/main.cpp.obj.requires
+.PHONY : CMakeFiles/HW3.dir/Factory.cxx.obj.requires
 
-CMakeFiles/HW3.dir/main.cpp.obj.provides: CMakeFiles/HW3.dir/main.cpp.obj.requires
-	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/main.cpp.obj.provides.build
-.PHONY : CMakeFiles/HW3.dir/main.cpp.obj.provides
+CMakeFiles/HW3.dir/Factory.cxx.obj.provides: CMakeFiles/HW3.dir/Factory.cxx.obj.requires
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory.cxx.obj.provides.build
+.PHONY : CMakeFiles/HW3.dir/Factory.cxx.obj.provides
 
-CMakeFiles/HW3.dir/main.cpp.obj.provides.build: CMakeFiles/HW3.dir/main.cpp.obj
+CMakeFiles/HW3.dir/Factory.cxx.obj.provides.build: CMakeFiles/HW3.dir/Factory.cxx.obj
 
 
 # Object files for target HW3
 HW3_OBJECTS = \
-"CMakeFiles/HW3.dir/main.cpp.obj"
+"CMakeFiles/HW3.dir/Factory.cxx.obj"
 
 # External object files for target HW3
 HW3_EXTERNAL_OBJECTS =
 
-HW3.exe: CMakeFiles/HW3.dir/main.cpp.obj
+HW3.exe: CMakeFiles/HW3.dir/Factory.cxx.obj
 HW3.exe: CMakeFiles/HW3.dir/build.make
 HW3.exe: CMakeFiles/HW3.dir/linklibs.rsp
 HW3.exe: CMakeFiles/HW3.dir/objects1.rsp
@@ -100,7 +100,7 @@ CMakeFiles/HW3.dir/build: HW3.exe
 
 .PHONY : CMakeFiles/HW3.dir/build
 
-CMakeFiles/HW3.dir/requires: CMakeFiles/HW3.dir/main.cpp.obj.requires
+CMakeFiles/HW3.dir/requires: CMakeFiles/HW3.dir/Factory.cxx.obj.requires
 
 .PHONY : CMakeFiles/HW3.dir/requires
 

@@ -122,32 +122,32 @@ HW3/fast:
 	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/build
 .PHONY : HW3/fast
 
-main.obj: main.cpp.obj
+Factory.obj: Factory.cxx.obj
 
-.PHONY : main.obj
+.PHONY : Factory.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+Factory.cxx.obj:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory.cxx.obj
+.PHONY : Factory.cxx.obj
 
-main.i: main.cpp.i
+Factory.i: Factory.cxx.i
 
-.PHONY : main.i
+.PHONY : Factory.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/main.cpp.i
-.PHONY : main.cpp.i
+Factory.cxx.i:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory.cxx.i
+.PHONY : Factory.cxx.i
 
-main.s: main.cpp.s
+Factory.s: Factory.cxx.s
 
-.PHONY : main.s
+.PHONY : Factory.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/main.cpp.s
-.PHONY : main.cpp.s
+Factory.cxx.s:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory.cxx.s
+.PHONY : Factory.cxx.s
 
 # Help Target
 help:
@@ -158,9 +158,9 @@ help:
 	@echo ... HW3
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... Factory.obj
+	@echo ... Factory.i
+	@echo ... Factory.s
 .PHONY : help
 
 
