@@ -14,6 +14,7 @@
     <list default="true" id="8f8d828a-7162-46fa-bcca-203bc9b0d167" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Factory.cxx" afterPath="$PROJECT_DIR$/Factory.cxx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Factory.h" afterPath="$PROJECT_DIR$/Factory.h" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,8 +40,8 @@
       <file leaf-file-name="Factory.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Factory.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="10" column="34" lean-forward="false" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
+            <state relative-caret-position="253">
+              <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
               <folding>
                 <element signature="e#39#59#0" expanded="true" />
               </folding>
@@ -61,8 +62,8 @@
       <file leaf-file-name="Factory.cxx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Factory.cxx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4300">
-              <caret line="172" column="20" lean-forward="false" selection-start-line="172" selection-start-column="20" selection-end-line="172" selection-end-column="20" />
+            <state relative-caret-position="3475">
+              <caret line="139" column="64" lean-forward="false" selection-start-line="139" selection-start-column="64" selection-end-line="139" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -71,7 +72,7 @@
       <file leaf-file-name="Product.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Product.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-75">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -351,7 +352,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1527707855461</updated>
-      <workItem from="1527707860089" duration="8726000" />
+      <workItem from="1527707860089" duration="12639000" />
     </task>
     <task id="LOCAL-00001" summary="checkgit">
       <created>1527708270761</created>
@@ -374,11 +375,18 @@
       <option name="project" value="LOCAL" />
       <updated>1527715190640</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="still need to complete the structure and many functions">
+      <created>1527953171029</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1527953171029</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8726000" />
+    <option name="totallyTimeSpent" value="12639000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -414,7 +422,8 @@
     <MESSAGE value="checkgit" />
     <MESSAGE value="cmake ready" />
     <MESSAGE value="some writing, first struct" />
-    <option name="LAST_COMMIT_MESSAGE" value="some writing, first struct" />
+    <MESSAGE value="still need to complete the structure and many functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="still need to complete the structure and many functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -437,14 +446,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Product.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/TDM-GCC-64/x86_64-w64-mingw32/include/pthread.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-6073">
@@ -453,10 +454,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Product.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-75">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Factory.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="10" column="34" lean-forward="false" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
+        <state relative-caret-position="253">
+          <caret line="24" column="4" lean-forward="false" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
           <folding>
             <element signature="e#39#59#0" expanded="true" />
           </folding>
@@ -465,8 +474,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Factory.cxx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4300">
-          <caret line="172" column="20" lean-forward="false" selection-start-line="172" selection-start-column="20" selection-end-line="172" selection-end-column="20" />
+        <state relative-caret-position="3475">
+          <caret line="139" column="64" lean-forward="false" selection-start-line="139" selection-start-column="64" selection-end-line="139" selection-end-column="64" />
           <folding />
         </state>
       </provider>

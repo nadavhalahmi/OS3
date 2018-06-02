@@ -4,17 +4,32 @@
 #include <pthread.h>
 #include <list>
 #include <queue>
+#include <map>
 #include "Product.h"
 
 class Factory{
 private:
-    std::queue<Product> *productsQ;
     bool returningServiceOpen;
     bool factoryOpen;
+    std::queue<Product> *productsQ;
+    //TODO: check if should be pthread_t*
+    std::map<int, pthread_t> *thiefThreads;
+    std::map<int, pthread_t> *companyThreads;
+    std::map<int, pthread_t> *simpleBuyerThreads;
+    std::map<int, pthread_t> *productionThreads;
 public:
     Factory();
     ~Factory();
-    
+
+    //added
+    std::map<int, pthread_t> *getThiefThreads() const;
+
+    std::map<int, pthread_t> *getCompanyThreads() const;
+
+    std::map<int, pthread_t> *getSimpleBuyerThreads() const;
+
+    std::map<int, pthread_t> *getProductionThreads() const;
+
     void startProduction(int num_products, Product* products, unsigned int id);
     void produce(int num_products, Product* products);
     void finishProduction(unsigned int id);
