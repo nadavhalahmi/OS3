@@ -17,6 +17,12 @@ private:
     std::map<int, pthread_t> *companyThreads;
     std::map<int, pthread_t> *simpleBuyerThreads;
     std::map<int, pthread_t> *productionThreads;
+    std::list<std::pair<Product, int>>* stolenProducts;
+    pthread_mutex_t productsQLock;
+    pthread_mutex_t stolenProductsLock;
+
+    pthread_cond_t buy_condition;
+    pthread_cond_t return_condition;
 public:
     Factory();
     ~Factory();

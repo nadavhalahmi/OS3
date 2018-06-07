@@ -28,7 +28,9 @@ typedef struct{
 
 void* tryBuyOneWrapper(void* arg){
     simpleBuyer_t* arg_t = (simpleBuyer_t*) arg;
-    arg_t->factory->tryBuyOne();
+    int* res = new int; //TODO: delete somewhere (deleted)
+    *res = arg_t->factory->tryBuyOne();
+    return res;
 }
 
 void* produceWrapper(void* arg){
@@ -39,12 +41,20 @@ void* produceWrapper(void* arg){
 void* companyBuyReturnWrapper(void* arg){
     companyBuyer_t* arg_t = (companyBuyer_t*) arg;
     std::list<Product> boughtProducts = arg_t->factory->buyProducts(arg_t->num_products);
-    arg_t->factory->returnProducts(boughtProducts, arg_t->id);
+    std::list<Product> toReturn = boughtProducts;
+    bool good_value (const int& value) { return (value >= arg_t->min_value); }
+    toReturn.remove_if(good_value);
+    int* num_returned = new int; //TODO: delete somewhere (deleted)
+    *num_returned = toReturn.size();
+    arg_t->factory->returnProducts(toReturn, arg_t->id);
+    return num_returned;
 }
 
 void* stealProductsWrapper(void* arg){
     thief_t* arg_t = (thief_t*) arg;
-    arg_t->factory->stealProducts(arg_t->num_products, arg_t->id);
+    int* res = new int; //TODO: delete somewhere (deleted)
+    *res = arg_t->factory->stealProducts(arg_t->num_products, arg_t->id);
+    return res;
 }
 
 Factory::Factory() : returningServiceOpen(true), factoryOpen(true){
@@ -53,9 +63,24 @@ Factory::Factory() : returningServiceOpen(true), factoryOpen(true){
     companyThreads = new std::map<int, pthread_t>();
     simpleBuyerThreads = new std::map<int, pthread_t>();
     productionThreads = new std::map<int, pthread_t>();
+    stolenProducts = new std::list<std::pair<Product, int>>();
+    pthread_mutexattr_t mutexattr;
+    pthread_mutexattr_settype(&mutexattr, PTHREAD_MUTEX_ERRORCHECK);
+    pthread_mutex_init(&productsQLock, &mutexattr);
+    pthread_mutex_init(&stolenProductsLock, &mutexattr);
+
+    pthread_cond_init(&buy_condition, NULL);
+    pthread_cond_init(&return_condition, NULL);
 }
 
 Factory::~Factory(){
+    pthread_mutex_destroy(&stolenProductsLock);
+    pthread_mutex_destroy(&productsQLock);
+    delete(stolenProducts);
+    delete(productionThreads);
+    delete(simpleBuyerThreads);
+    delete(companyThreads);
+    delete(thiefThreads);
     delete(productsQ);
 }
 
@@ -72,14 +97,15 @@ void Factory::startProduction(int num_products, Product* products,unsigned int i
 }
 
 void Factory::produce(int num_products, Product* products){
-    //TODO: maybe lock productsQ
+    pthread_mutex_lock(&productsQLock);
     for(int i=0;i<num_products;i++)
         productsQ->push(products[i]);
+    pthread_mutex_unlock(&productsQLock);
 }
 
 void Factory::finishProduction(unsigned int id){
     pthread_t thread = productionThreads->at(id);
-    //TODO: complete
+    pthread_join(thread, NULL);
 }
 
 void Factory::startSimpleBuyer(unsigned int id){
@@ -93,19 +119,25 @@ void Factory::startSimpleBuyer(unsigned int id){
 }
 
 int Factory::tryBuyOne(){
-    //TODO: maybe lock productsQ
-    if(productsQ->empty())
+    if(pthread_mutex_trylock(&productsQLock))
+        return -1; //factory busy
+    if(productsQ->empty() || !factoryOpen){
+        pthread_mutex_unlock(&productsQLock);
         return -1;
-    if(/*TODO: check here if a thread is working on the factory at the moment*/)
-        return -1;
+    }
     int id = productsQ->front().getId();
     productsQ->pop(); //assuming front deosnt remove the element
+    pthread_mutex_unlock(&productsQLock);
     return id;
 }
 
 int Factory::finishSimpleBuyer(unsigned int id){
-    //TODO: complete and check whtat about the return value (should tryBuyOne be called?)
-    return -1;
+    pthread_t thread = simpleBuyerThreads->at(id);
+    void* pval;
+    pthread_join(thread, &pval);
+    int res = *(int*)(pval);
+    delete pval; //TODO: check
+    return res;
 }
 
 void Factory::startCompanyBuyer(int num_products, int min_value,unsigned int id){
@@ -121,20 +153,48 @@ void Factory::startCompanyBuyer(int num_products, int min_value,unsigned int id)
 }
 
 std::list<Product> Factory::buyProducts(int num_products){
-    if(/*TODO: check if it cant access*/)
-        wait;
-    //TODO: check what if num_products is too big
-    //TODO: complete
-    return std::list<Product>();
+    std::list<Product> boughtList;
+    Product p;
+    pthread_mutex_lock(&productsQLock);
+
+    while(num_products>productsQ->size() || !thiefThreads->empty() || !factoryOpen){
+        pthread_cond_wait(&buy_condition , &productsQLock);
+    }
+    while(num_products){
+        p = productsQ->front();
+        boughtList.push_front(p); //TODO: check order is fine (according to return function)
+        productsQ->pop();
+        num_products--;
+    }
+
+    pthread_mutex_unlock(&productsQLock);
+    return boughtList;
 }
 
 void Factory::returnProducts(std::list<Product> products,unsigned int id){
-    //TODO: complete
+    pthread_mutex_lock(&productsQLock);
+
+    while(!thiefThreads->empty() || !factoryOpen || !returningServiceOpen){
+        pthread_cond_wait(&return_condition , &productsQLock);
+    }
+    for(Product p: products){
+        productsQ->push(p);
+    }
+
+    pthread_cond_broadcast(&buy_condition); //TODO: check if signal
+    //TODO: check if "add signal"
+
+    pthread_mutex_unlock(&productsQLock);
+    return;
 }
 
 int Factory::finishCompanyBuyer(unsigned int id){
-    //TODO: complete
-    return 0;
+    pthread_t thread = simpleBuyerThreads->at(id);
+    void* pval;
+    pthread_join(thread, &pval);
+    int res = *(int*)(pval);
+    delete pval; //TODO: check
+    return res;
 }
 
 void Factory::startThief(int num_products,unsigned int fake_id){
@@ -159,8 +219,12 @@ int Factory::stealProducts(int num_products,unsigned int fake_id){
 }
 
 int Factory::finishThief(unsigned int fake_id){
-    //TODO: complete
-    return 0;
+    pthread_t thread = thiefThreads->at(fake_id);
+    void* pval;
+    pthread_join(thread, &pval);
+    int res = *(int*)(pval);
+    delete pval; //TODO: check
+    return res;
 }
 
 void Factory::closeFactory(){
