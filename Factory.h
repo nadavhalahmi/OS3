@@ -11,6 +11,7 @@ class Factory{
 private:
     bool returningServiceOpen;
     bool factoryOpen;
+    int activeThiefs;
     std::deque<Product> *productsQ;
     //TODO: check if should be pthread_t*
     std::map<int, pthread_t> *thiefThreads;
