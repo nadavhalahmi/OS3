@@ -3,5 +3,5 @@ project(HW3)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES Factory.h Product.h Factory.cxx)
+set(SOURCE_FILES Factory.h Product.h Factory.cxx test_din.cpp)
 add_executable(HW3 ${SOURCE_FILES})

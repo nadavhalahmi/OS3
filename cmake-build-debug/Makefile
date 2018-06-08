@@ -149,6 +149,33 @@ Factory.cxx.s:
 	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory.cxx.s
 .PHONY : Factory.cxx.s
 
+test_din.obj: test_din.cpp.obj
+
+.PHONY : test_din.obj
+
+# target to build an object file
+test_din.cpp.obj:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/test_din.cpp.obj
+.PHONY : test_din.cpp.obj
+
+test_din.i: test_din.cpp.i
+
+.PHONY : test_din.i
+
+# target to preprocess a source file
+test_din.cpp.i:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/test_din.cpp.i
+.PHONY : test_din.cpp.i
+
+test_din.s: test_din.cpp.s
+
+.PHONY : test_din.s
+
+# target to generate assembly for a file
+test_din.cpp.s:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/test_din.cpp.s
+.PHONY : test_din.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -161,6 +188,9 @@ help:
 	@echo ... Factory.obj
 	@echo ... Factory.i
 	@echo ... Factory.s
+	@echo ... test_din.obj
+	@echo ... test_din.i
+	@echo ... test_din.s
 .PHONY : help
 
 

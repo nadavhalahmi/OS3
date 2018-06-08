@@ -11,7 +11,7 @@ class Factory{
 private:
     bool returningServiceOpen;
     bool factoryOpen;
-    std::queue<Product> *productsQ;
+    std::deque<Product> *productsQ;
     //TODO: check if should be pthread_t*
     std::map<int, pthread_t> *thiefThreads;
     std::map<int, pthread_t> *companyThreads;
@@ -23,18 +23,10 @@ private:
 
     pthread_cond_t buy_condition;
     pthread_cond_t return_condition;
+    pthread_cond_t thief_condition;
 public:
     Factory();
     ~Factory();
-
-    //added
-    std::map<int, pthread_t> *getThiefThreads() const;
-
-    std::map<int, pthread_t> *getCompanyThreads() const;
-
-    std::map<int, pthread_t> *getSimpleBuyerThreads() const;
-
-    std::map<int, pthread_t> *getProductionThreads() const;
 
     void startProduction(int num_products, Product* products, unsigned int id);
     void produce(int num_products, Product* products);
