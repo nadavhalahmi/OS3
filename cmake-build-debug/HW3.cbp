@@ -88,10 +88,19 @@
 		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/Factory.h">
 			<Option target="HW3"/>
 		</Unit>
+		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/Factory_test.cpp">
+			<Option target="HW3"/>
+		</Unit>
 		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/Product.h">
 			<Option target="HW3"/>
 		</Unit>
+		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/test.cxx">
+			<Option target="HW3"/>
+		</Unit>
 		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/test_din.cpp">
+			<Option target="HW3"/>
+		</Unit>
+		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/test_utilities.h">
 			<Option target="HW3"/>
 		</Unit>
 		<Unit filename="C:/Users/nadav/OneDrive - Technion/Simester D/OS/HW3/CMakeLists.txt">

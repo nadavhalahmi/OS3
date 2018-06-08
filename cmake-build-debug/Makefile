@@ -149,6 +149,60 @@ Factory.cxx.s:
 	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory.cxx.s
 .PHONY : Factory.cxx.s
 
+Factory_test.obj: Factory_test.cpp.obj
+
+.PHONY : Factory_test.obj
+
+# target to build an object file
+Factory_test.cpp.obj:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory_test.cpp.obj
+.PHONY : Factory_test.cpp.obj
+
+Factory_test.i: Factory_test.cpp.i
+
+.PHONY : Factory_test.i
+
+# target to preprocess a source file
+Factory_test.cpp.i:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory_test.cpp.i
+.PHONY : Factory_test.cpp.i
+
+Factory_test.s: Factory_test.cpp.s
+
+.PHONY : Factory_test.s
+
+# target to generate assembly for a file
+Factory_test.cpp.s:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/Factory_test.cpp.s
+.PHONY : Factory_test.cpp.s
+
+test.obj: test.cxx.obj
+
+.PHONY : test.obj
+
+# target to build an object file
+test.cxx.obj:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/test.cxx.obj
+.PHONY : test.cxx.obj
+
+test.i: test.cxx.i
+
+.PHONY : test.i
+
+# target to preprocess a source file
+test.cxx.i:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/test.cxx.i
+.PHONY : test.cxx.i
+
+test.s: test.cxx.s
+
+.PHONY : test.s
+
+# target to generate assembly for a file
+test.cxx.s:
+	$(MAKE) -f CMakeFiles\HW3.dir\build.make CMakeFiles/HW3.dir/test.cxx.s
+.PHONY : test.cxx.s
+
 test_din.obj: test_din.cpp.obj
 
 .PHONY : test_din.obj
@@ -188,6 +242,12 @@ help:
 	@echo ... Factory.obj
 	@echo ... Factory.i
 	@echo ... Factory.s
+	@echo ... Factory_test.obj
+	@echo ... Factory_test.i
+	@echo ... Factory_test.s
+	@echo ... test.obj
+	@echo ... test.i
+	@echo ... test.s
 	@echo ... test_din.obj
 	@echo ... test_din.i
 	@echo ... test_din.s

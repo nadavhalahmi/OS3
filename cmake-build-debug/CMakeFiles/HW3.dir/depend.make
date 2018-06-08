@@ -5,6 +5,15 @@ CMakeFiles/HW3.dir/Factory.cxx.obj: ../Factory.cxx
 CMakeFiles/HW3.dir/Factory.cxx.obj: ../Factory.h
 CMakeFiles/HW3.dir/Factory.cxx.obj: ../Product.h
 
+CMakeFiles/HW3.dir/Factory_test.cpp.obj: ../Factory.h
+CMakeFiles/HW3.dir/Factory_test.cpp.obj: ../Factory_test.cpp
+CMakeFiles/HW3.dir/Factory_test.cpp.obj: ../Product.h
+
+CMakeFiles/HW3.dir/test.cxx.obj: ../Factory.h
+CMakeFiles/HW3.dir/test.cxx.obj: ../Product.h
+CMakeFiles/HW3.dir/test.cxx.obj: ../test.cxx
+CMakeFiles/HW3.dir/test.cxx.obj: ../test_utilities.h
+
 CMakeFiles/HW3.dir/test_din.cpp.obj: ../Factory.h
 CMakeFiles/HW3.dir/test_din.cpp.obj: ../Product.h
 CMakeFiles/HW3.dir/test_din.cpp.obj: ../test_din.cpp

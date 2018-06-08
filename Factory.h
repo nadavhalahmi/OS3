@@ -19,6 +19,7 @@ private:
     std::map<int, pthread_t> *simpleBuyerThreads;
     std::map<int, pthread_t> *productionThreads;
     std::list<std::pair<Product, int>>* stolenProducts;
+    pthread_mutexattr_t mutexattr;
     pthread_mutex_t productsQLock;
     pthread_mutex_t stolenProductsLock;
 

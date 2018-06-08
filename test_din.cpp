@@ -225,8 +225,8 @@ int bigSynchronizationTest()
 }
 
 
-int main() {
-    for (int i = 0; i < 100; i++)
+int main1() {
+    for (int i = 0; i < 10; i++)
     {
         std::cout << "The test number is: " << i << "\n";
         simpleBuyerTest();

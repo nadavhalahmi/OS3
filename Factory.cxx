@@ -41,6 +41,7 @@ void* produceWrapper(void* arg){
     produce_t* arg_t = (produce_t*) arg;
     arg_t->factory->produce(arg_t->num_products, arg_t->products);
     delete arg_t; //TODO: check arg stuff aren't deleted (factory for example)
+    return NULL;
 }
 
 void* companyBuyReturnWrapper(void* arg){
@@ -73,7 +74,7 @@ Factory::Factory() : returningServiceOpen(true), factoryOpen(true), activeThiefs
     simpleBuyerThreads = new std::map<int, pthread_t>();
     productionThreads = new std::map<int, pthread_t>();
     stolenProducts = new std::list<std::pair<Product, int>>();
-    pthread_mutexattr_t mutexattr;
+    pthread_mutexattr_init(&mutexattr);
     pthread_mutexattr_settype(&mutexattr, PTHREAD_MUTEX_ERRORCHECK);
     pthread_mutex_init(&productsQLock, &mutexattr);
     pthread_mutex_init(&stolenProductsLock, &mutexattr);
@@ -86,6 +87,7 @@ Factory::Factory() : returningServiceOpen(true), factoryOpen(true), activeThiefs
 Factory::~Factory(){
     pthread_mutex_destroy(&stolenProductsLock);
     pthread_mutex_destroy(&productsQLock);
+    pthread_mutexattr_destroy(&mutexattr);
     delete(stolenProducts);
     delete(productionThreads);
     delete(simpleBuyerThreads);
@@ -185,7 +187,7 @@ std::list<Product> Factory::buyProducts(int num_products){
     Product p;
     while(num_products){
         p = productsQ->front();
-        boughtList.push_front(p); //TODO: check order is fine (according to return function)
+        boughtList.push_back(p);
         productsQ->pop_front();
         num_products--;
     }
@@ -195,9 +197,10 @@ std::list<Product> Factory::buyProducts(int num_products){
 }
 
 void Factory::returnProducts(std::list<Product> products,unsigned int id){
+    if(products.empty())
+        return;
     pthread_mutex_lock(&productsQLock);
     //std::cout << "thread with id " << pthread_self() << " got the lock in returnProducts\n";
-
     while(activeThiefs || !factoryOpen || !returningServiceOpen){
         //std::cout << "thread with id " << pthread_self() << " wait: (returnProducts) return_condition" << std::endl;
         pthread_cond_wait(&return_condition , &productsQLock);
