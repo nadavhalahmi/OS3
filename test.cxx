@@ -5,7 +5,7 @@
 #include "test_utilities.h"
 
 #define TEST_SYNC_SIZE 100 // this is not recommended to increase this parameter.
-#define STRESS_TEST_SIZE 10000 // with this parameter you can do whatever you want
+#define STRESS_TEST_SIZE 100 // with this parameter you can do whatever you want
 
 using namespace std;
 
@@ -374,11 +374,9 @@ bool testStressTestSync() {
 		if(!testSync()){
 			return false;
 		}
-		
-		if(i%100 == 0){
-			printf("test loop #%d\n", i);
-			fflush(stdout);
-		}
+
+		printf("test loop #%d\n", i);
+		fflush(stdout);
 	}
 	return true;
 }

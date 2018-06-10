@@ -299,7 +299,7 @@ int listAvailableProductsTest(){
     return 0;
 }
 
-int main2(){
+int main(){
     startSimpleBuyerTest();
     produceTest();
     startProductionTest();

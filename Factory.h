@@ -13,7 +13,6 @@ private:
     bool factoryOpen;
     int activeThiefs;
     std::deque<Product> *productsQ;
-    //TODO: check if should be pthread_t*
     std::map<int, pthread_t> *thiefThreads;
     std::map<int, pthread_t> *companyThreads;
     std::map<int, pthread_t> *simpleBuyerThreads;

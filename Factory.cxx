@@ -1,8 +1,6 @@
 #include <iostream>
 #include "Factory.h"
 
-template class std::map<int, pthread_t>; //TODO: delete this line after debugging
-
 typedef struct{
     Factory* factory;
     Product* products;
@@ -33,14 +31,14 @@ void* tryBuyOneWrapper(void* arg){
     simpleBuyer_t* arg_t = (simpleBuyer_t*) arg;
     int* res = new int();
     *res = arg_t->factory->tryBuyOne();
-    delete arg_t; //TODO: check arg stuff aren't deleted (factory for example)
+    delete arg_t;
     return res;
 }
 
 void* produceWrapper(void* arg){
     produce_t* arg_t = (produce_t*) arg;
     arg_t->factory->produce(arg_t->num_products, arg_t->products);
-    delete arg_t; //TODO: check arg stuff aren't deleted (factory for example)
+    delete arg_t;
     return NULL;
 }
 
@@ -52,18 +50,18 @@ void* companyBuyReturnWrapper(void* arg){
         if(p.getValue() < arg_t->min_value)
             toReturn.push_back(p); //check order
     }
-    int* num_returned = new int(); //TODO: delete somewhere (deleted)
+    int* num_returned = new int();
     *num_returned = toReturn.size();
     arg_t->factory->returnProducts(toReturn, arg_t->id);
-    delete arg_t; //TODO: check arg stuff aren't deleted (factory for example)
+    delete arg_t;
     return num_returned;
 }
 
 void* stealProductsWrapper(void* arg){
     thief_t* arg_t = (thief_t*) arg;
-    int* res = new int(); //TODO: delete somewhere (deleted)
+    int* res = new int();
     *res = arg_t->factory->stealProducts(arg_t->num_products, arg_t->id);
-    delete arg_t; //TODO: check arg stuff aren't deleted (factory for example)
+    delete arg_t;
     return res;
 }
 
@@ -110,14 +108,12 @@ void Factory::startProduction(int num_products, Product* products,unsigned int i
 
 void Factory::produce(int num_products, Product* products){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in produce\n";
     for(int i=0;i<num_products;i++)
         productsQ->push_back(products[i]);
 
     //signal that we added products
-    pthread_cond_broadcast(&thief_condition);
+    pthread_cond_signal(&thief_condition);
     pthread_cond_broadcast(&buy_condition);
-    //std::cout << "thread with id " << pthread_self() << " released the lock in produce\n";
     pthread_mutex_unlock(&productsQLock);
 }
 
@@ -140,15 +136,12 @@ void Factory::startSimpleBuyer(unsigned int id){
 int Factory::tryBuyOne(){
     if(pthread_mutex_trylock(&productsQLock))
         return -1; //factory busy
-    //std::cout << "thread with id " << pthread_self() << " got the lock in tryBuyOne\n";
     if(productsQ->empty() || !factoryOpen){
-        //std::cout << "thread with id " << pthread_self() << " released the lock in tryBuyOne\n";
         pthread_mutex_unlock(&productsQLock);
         return -1;
     }
     int id = productsQ->front().getId();
-    productsQ->pop_front(); //assuming front deosnt remove the element
-    //std::cout << "thread with id " << pthread_self() << " released the lock in tryBuyOne\n";
+    productsQ->pop_front();
     pthread_mutex_unlock(&productsQLock);
     return id;
 }
@@ -158,7 +151,7 @@ int Factory::finishSimpleBuyer(unsigned int id){
     void* pval;
     pthread_join(thread, &pval);
     int res = *(int*)(pval);
-    delete (int*)(pval); //TODO: check
+    delete (int*)(pval);
     simpleBuyerThreads->erase(id);
     return res;
 }
@@ -177,10 +170,8 @@ void Factory::startCompanyBuyer(int num_products, int min_value,unsigned int id)
 
 std::list<Product> Factory::buyProducts(int num_products){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in buyProducts\n";
 
     while(num_products>productsQ->size() || activeThiefs || !factoryOpen){
-        //std::cout << "thread with id " << pthread_self() << " wait: (buyProducts) buy_condition" << std::endl;
         pthread_cond_wait(&buy_condition , &productsQLock);
     }
     std::list<Product> boughtList;
@@ -191,7 +182,6 @@ std::list<Product> Factory::buyProducts(int num_products){
         productsQ->pop_front();
         num_products--;
     }
-    //std::cout << "thread with id " << pthread_self() << " released the lock in buyProducts\n";
     pthread_mutex_unlock(&productsQLock);
     return boughtList;
 }
@@ -200,9 +190,7 @@ void Factory::returnProducts(std::list<Product> products,unsigned int id){
     if(products.empty())
         return;
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in returnProducts\n";
     while(activeThiefs || !factoryOpen || !returningServiceOpen){
-        //std::cout << "thread with id " << pthread_self() << " wait: (returnProducts) return_condition" << std::endl;
         pthread_cond_wait(&return_condition , &productsQLock);
     }
     for(Product p: products){
@@ -211,8 +199,7 @@ void Factory::returnProducts(std::list<Product> products,unsigned int id){
 
 
     pthread_cond_broadcast(&buy_condition);
-    pthread_cond_broadcast(&return_condition);
-    //std::cout << "thread with id " << pthread_self() << " released the lock in returnProducts\n";
+    pthread_cond_signal(&return_condition);
     pthread_mutex_unlock(&productsQLock);
     return;
 }
@@ -229,7 +216,6 @@ int Factory::finishCompanyBuyer(unsigned int id){
 
 void Factory::startThief(int num_products,unsigned int fake_id){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in startThief\n";
     pthread_t p;
 
     thief_t* arg = new thief_t();
@@ -239,16 +225,13 @@ void Factory::startThief(int num_products,unsigned int fake_id){
     pthread_create(&p, NULL, stealProductsWrapper, arg);
     thiefThreads->insert(std::pair<int, pthread_t>(fake_id, p));
     activeThiefs++;
-    //std::cout << "thread with id " << pthread_self() << " released the lock in startThief\n";
     pthread_mutex_unlock(&productsQLock);
 }
 
 int Factory::stealProducts(int num_products,unsigned int fake_id){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in stealProducts\n";
 
     while(!factoryOpen){
-        //std::cout << "thread with id " << pthread_self() << " wait: (stealProducts) thief_condition" << std::endl;
         pthread_cond_wait(&thief_condition, &productsQLock);
     }
     pthread_mutex_lock(&stolenProductsLock);
@@ -256,7 +239,7 @@ int Factory::stealProducts(int num_products,unsigned int fake_id){
     int num_stolen=0;
     while(!productsQ->empty() && num_stolen<num_products){
         p = productsQ->front();
-        stolenProducts->push_back(std::pair<Product, int>(p, fake_id)); //oreder should be good, check anyway
+        stolenProducts->push_back(std::pair<Product, int>(p, fake_id));
         productsQ->pop_front();
         num_stolen++;
     }
@@ -264,10 +247,9 @@ int Factory::stealProducts(int num_products,unsigned int fake_id){
 
     activeThiefs--;
     pthread_cond_broadcast(&buy_condition);
-    pthread_cond_broadcast(&return_condition);
-    pthread_cond_broadcast(&thief_condition);
-    //std::cout << "thread with id " << pthread_self() << " released the lock in stealProducts\n";
-    pthread_mutex_unlock(&productsQLock); //TODO: check unlock timing
+    pthread_cond_signal(&return_condition);
+    pthread_cond_signal(&thief_condition);
+    pthread_mutex_unlock(&productsQLock);
     return num_stolen;
 }
 
@@ -283,37 +265,29 @@ int Factory::finishThief(unsigned int fake_id){
 
 void Factory::closeFactory(){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in closeFactory\n";
     factoryOpen = false;
-    //std::cout << "thread with id " << pthread_self() << " released the lock in closeFactory\n";
     pthread_mutex_unlock(&productsQLock);
 }
 
 void Factory::openFactory(){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in openFactory\n";
     factoryOpen = true;
     pthread_cond_broadcast(&buy_condition);
-    pthread_cond_broadcast(&return_condition);//check if "returnService" needs to be checked
-    pthread_cond_broadcast(&thief_condition);
-    //std::cout << "thread with id " << pthread_self() << " released the lock in openFactory\n";
+    pthread_cond_signal(&return_condition);
+    pthread_cond_signal(&thief_condition);
     pthread_mutex_unlock(&productsQLock);
 }
 
 void Factory::closeReturningService(){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in closeReturningService\n";
     returningServiceOpen = false;
-    //std::cout << "thread with id " << pthread_self() << " released the lock in closeReturningService\n";
     pthread_mutex_unlock(&productsQLock);
 }
 
 void Factory::openReturningService(){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in openReturningService\n";
     returningServiceOpen = true;
-    pthread_cond_broadcast(&return_condition);//check if "factoryOpen" needs to be checked
-    //std::cout << "thread with id " << pthread_self() << " released the lock in openReturningService\n";
+    pthread_cond_signal(&return_condition);
     pthread_mutex_unlock(&productsQLock);
 }
 
@@ -326,12 +300,10 @@ std::list<std::pair<Product, int>> Factory::listStolenProducts(){
 
 std::list<Product> Factory::listAvailableProducts(){
     pthread_mutex_lock(&productsQLock);
-    //std::cout << "thread with id " << pthread_self() << " got the lock in listAvailableProducts\n";
     std::list<Product> productsList;
     for(Product p : *productsQ){
         productsList.push_back(p);
     }
-    //std::cout << "thread with id " << pthread_self() << " released the lock in listAvailableProducts\n";
     pthread_mutex_unlock(&productsQLock);
     return productsList;
 }
